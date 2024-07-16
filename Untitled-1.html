@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommendation App</title>
+    <style>
+        body {
+            font-family: Arial;
+            background-color:white;
+        }
+        
+        header {
+            background-color:black;
+            color:white;
+            text-align: center;
+        }
+        
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color:white;
+            border-radius: 5px;
+        }
+        
+        .search-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .search-container input[type=text] {
+            padding: 10px;
+            width: 60%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        .search-container button {
+            padding: 10px 20px;
+            background-color:black;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        
+        .movie-item {
+            border: 1px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .movie-item h2 {
+            margin-top: 0;
+        }
+        
+        .movie-item p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Movie Recommendation App</h1>
+    </header>
+    <main>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search movies...">
+            <button onclick="searchMovies()">Search</button>
+        </div>
+        <div id="movieList">
+        </div>
+        <a href="https://www.google.com/search?q=tamil+movie+list&sca_esv=a5295d27d6bcdf79&sca_upv=1&rlz=1C1RXQR_enIN1003IN1003&sxsrf=ADLYWIL6UbXnvc6bnuFKO1Ss401Br3KQDA%3A1719892870867&ei=hnuDZtK9NMnl2roPm5axoAs&ved=0ahUKEwjSmPqcvIeHAxXJslYBHRtLDLQQ4dUDCA8&uact=5&oq=tamil+movie+list&gs_lp=Egxnd3Mtd2l6LXNlcnAiEHRhbWlsIG1vdmllIGxpc3QyBBAAGEcyBBAAGEcyBBAAGEcyBBAAGEcyBBAAGEcyBBAAGEcyBBAAGEcyBBAAGEdIugNQAFgAcAB4ApABAJgBAKABAKoBALgBA8gBAJgCAaACKZgDAIgGAZAGCJIHATGgBwA&sclient=gws-wiz-serp">Tamil Movie List</a><br>
+        <a href="https://www.google.com/search?q=malayalam+movie+list&sca_esv=a5295d27d6bcdf79&sca_upv=1&rlz=1C1RXQR_enIN1003IN1003&sxsrf=ADLYWIJxL3JqQ6k_f95gGHU1modTeriirA%3A1719893295611&ei=L32DZsHzJLHk2roP0-O8oA8&ved=0ahUKEwiBx77nvYeHAxUxslYBHdMxD_QQ4dUDCA8&uact=5&oq=malayalam+movie+list&gs_lp=Egxnd3Mtd2l6LXNlcnAiFG1hbGF5YWxhbSBtb3ZpZSBsaXN0MgQQABhHMgQQABhHMgQQABhHMgQQABhHMgQQABhHMgQQABhHMgQQABhHMgQQABhHSM4MUGZY7QpwAHgCkAEAmAEAoAEAqgEAuAEDyAEA-AEBmAIBoAI_mAMAiAYBkAYIkgcBMaAHAA&sclient=gws-wiz-serp">Malayalam Movie List</a><br>
+        <a href="https://www.google.com/search?q=Telugu+movie+list&sca_esv=a5295d27d6bcdf79&sca_upv=1&rlz=1C1RXQR_enIN1003IN1003&sxsrf=ADLYWIJe9AdH5XztlILpKUXUn4Y37wETeQ%3A1719893304770&ei=OH2DZsXCLsOt0-kPv_qosAo&ved=0ahUKEwjFvu3rvYeHAxXD1jQHHT89CqYQ4dUDCA8&uact=5&oq=Telugu+movie+list&gs_lp=Egxnd3Mtd2l6LXNlcnAiEVRlbHVndSBtb3ZpZSBsaXN0MgsQABiABBiRAhiKBTIKEAAYgAQYFBiHAjIFEAAYgAQyCxAAGIAEGJECGIoFMgsQABiABBiRAhiKBTILEAAYgAQYkQIYigUyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAESO67AVDXBliInwFwA3gBkAEAmAHpAqABgSWqAQgwLjMuMTAuNbgBA8gBAPgBAZgCDKACqBLCAgoQABiwAxjWBBhHwgINEAAYgAQYsAMYQxiKBcICBhAAGAcYHsICChAjGIAEGCcYigXCAgoQABiABBhDGIoFwgINEAAYgAQYsQMYFBiHAsICBxAAGIAEGA2YAwCIBgGQBgqSBwczLjEuNi4yoAfvgQE&sclient=gws-wiz-serp">Telugu Movie List</a>
+    </main>
+
+       <script>
+        function searchMovies() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const filteredMovies = movies.filter(movie =>
+                movie.title.toLowerCase().includes(searchInput) ||
+                movie.genre.toLowerCase().includes(searchInput) ||
+                movie.year.toString().includes(searchInput) ||
+                movie.rating.toString().includes(searchInput)
+            );
+
+            displayMovies(filteredMovies);
+        }
+
+        
+        function displayMovies(movieArray) {
+            const movieListContainer = document.getElementById('movieList');
+            movieListContainer.innerHTML = '';
+
+            movieArray.forEach(movie => {
+                const movieItem = document.createElement('div');
+                movieItem.classList.add('movie-item');
+                movieItem.innerHTML = `
+                    <h2>${movie.title} (${movie.year})</h2>
+                    <p><strong>Genre:</strong> ${movie.genre}</p>
+                    <p><strong>Rating:</strong> ${movie.rating}</p>
+                `;
+                movieListContainer.appendChild(movieItem);
+            });
+        }
+        displayMovies(movies);
+    </script>
+</body>
+</html>
